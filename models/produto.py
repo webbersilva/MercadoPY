@@ -11,11 +11,11 @@ class Produto:
 
     @property
     def codigo(self: object) -> int:
-        return self.__nome
+        return self.__codigo
 
     @property
     def nome(self: object) -> str:
-        return self.__codigo
+        return self.__nome
 
     @property
     def preco(self: object) -> float:

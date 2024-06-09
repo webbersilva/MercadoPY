@@ -8,7 +8,7 @@ produtos: List[Produto] = []
 carrinho: List[Dict[Produto, int]] = []
 
 def main() -> None:
-    pass
+    menu()
 
 def menu() -> None:
     print('====================================')
@@ -53,6 +53,8 @@ def cadastrar_produto() -> None:
 
     produto: Produto = Produto(nome, preco)
 
+    produtos.append(produto)
+
     print(f'O produto {produto.nome} foi cadastrado com sucesso!')
     sleep(2)
     menu()
@@ -62,9 +64,9 @@ def listar_produtos() -> None:
         print("LiStagem de produtos")
         print('--------------------')
         for produto in produtos:
-         print(produto)
-         print('----------')
-         sleep(1)
+            print(produto)
+            print('----------')
+            sleep(1)
     else:
         print('Ainda não existe produtos cadastrados.')
     sleep(2)
@@ -88,19 +90,19 @@ def comprar_produto() -> None:
             if len(carrinho) > 0:
                 tem_no_carrinho: bool =False
                 for item in carrinho:
-                    quant: int = item.get()
+                    quant: int = item.get(produto)
                     if quant:
-                        item[produto] = quant +1
+                        item[produto] = quant + 1
                         print(f'O produto {produto.nome} agora possui {quant + 1} unidades no carrinho.')
                         tem_no_carrinho = True
                         sleep(2)
                         menu()
-                    if not tem_no_carrinho:
-                        prod = {produto: 1}
-                        carrinho.append(prod)
-                        print(f'O produto {produto.nome} foi adicionado ao carrinho.')
-                        sleep(2)
-                        menu()
+                if not tem_no_carrinho:
+                    prod = {produto: 1}
+                    carrinho.append(prod)
+                    print(f'O produto {produto.nome} foi adicionado ao carrinho.')
+                    sleep(2)
+                    menu()
             else:
                 item = {produto: 1}
                 carrinho.append(item)
@@ -138,8 +140,8 @@ def fechar_pedido() -> None:
         valor_total: float =0
 
         print('Produtos do Carrinho')
-        for item in carrinho :
-            for dados in item.item():
+        for item in carrinho:
+            for dados in item.items():
                 print(dados[0])
                 print(f'Quantidade: {dados[1]}')
                 valor_total += dados[0].preco * dados[1]
